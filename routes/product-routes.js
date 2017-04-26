@@ -20,5 +20,41 @@ productRoutes.get('/products', (req, res, next) => {
   });
 });
 
+productRoutes.get('/products/new', (req, res, next) => {
+  res.render('products/new-product-view.ejs');
+});
+
+// <form method="post" action="/products/new">
+//                |                  |
+//             ====       ============
+//             |          |
+productRoutes.post('/products/new', (req, res, next) => {
+
+                                  // <input name="productName">
+const theProduct = new Product({  //                  |
+      //               ================================
+      //               |
+    name: req.body.productName,
+    price: req.body.productPrice,
+    imageUrl: req.body.productImageUrl,
+    description: req.body.productDescription
+  });
+
+  theProduct.save((err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+      // http://localhost:3000/products
+      //                          |
+      //              =============
+      //              |
+    res.redirect('/products');
+      // redirect instead of render!
+      // this way, refreshing the page doesn't create duplicates.
+  });
+});
+
 
 module.exports = productRoutes;
