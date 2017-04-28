@@ -57,13 +57,24 @@ const theProduct = new Product({  //                  |
 });
 
 
-  //  /product-details?id=1788
-  //  /product-details?id=9999
-  //  /product-details?id=5577
-productRoutes.get('/product-details', (req, res, next) => {
-    //      /product-details? id =777777777
+// OLD VERSION ===> using query strings
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                    /product-details?id=1788
+//                    /product-details?id=9999
+//                    /product-details?id=5577
+// productRoutes.get('/product-details', (req, res, next) => {
+//             /product-details? id =777777777
+//                                |
+//   const productId = req.query.id;
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+  //               /products/1788
+  //               /products/9999
+  //               /products/5577
+productRoutes.get('/products/:id', (req, res, next) => {
     //                         |
-  const productId = req.query.id;
+  const productId = req.params.id;
 
   Product.findById(productId, (err, theProduct) => {
     if (err) {                        // |
@@ -82,6 +93,57 @@ productRoutes.get('/product-details', (req, res, next) => {
       product: theProduct                                 // |
     });          // |                                     // |
   });            // ==========================================
+});
+
+  //               /products/444/edit
+  //               /products/123/edit
+  //               /products/20/edit
+productRoutes.get('/products/:id/edit', (req, res, next) => {
+    //                         |
+  const productId = req.params.id;
+
+  Product.findById(productId, (err, theProduct) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    res.render('products/edit-product-view.ejs', {
+      product: theProduct
+    });
+  });
+});
+
+productRoutes.post('/products/:id', (req, res, next) => {
+    //                          |
+  const productId = req.params.id;
+
+    // gather the form values into an object
+  const productChanges = {
+    name: req.body.productName,
+    price: req.body.productPrice,
+    imageUrl: req.body.productImageUrl,
+    description: req.body.productDescription
+  };
+
+  Product.findByIdAndUpdate(
+      // 1st arg -> which document (id of the document)
+    productId,
+      // 2nd arg -> which changes to save (from the form)
+    productChanges,
+      // 3rd arg -> CALLBACK!
+    (err, theProduct) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      // this is how you would redirect to product details page
+      // res.redirect(`/products/${productId}`);
+
+      res.redirect('/products');
+    }
+  );
 });
 
 
