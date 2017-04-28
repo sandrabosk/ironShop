@@ -57,4 +57,32 @@ const theProduct = new Product({  //                  |
 });
 
 
+  //  /product-details?id=1788
+  //  /product-details?id=9999
+  //  /product-details?id=5577
+productRoutes.get('/product-details', (req, res, next) => {
+    //      /product-details? id =777777777
+    //                         |
+  const productId = req.query.id;
+
+  Product.findById(productId, (err, theProduct) => {
+    if (err) {                        // |
+      next(err);                      // =====================                                         // |
+      return;                                             // |
+    }                                                     // |
+                                                          // |
+    // DOESN'T WORK                                       // |
+    // // 404 if no product was found (i.e. bullshit id)  // |
+    // if (!theProduct) {                                 // |
+    //   next();                                          // |
+    //   return;                                          // |
+    // }                                                  // |
+                                                          // |
+    res.render('products/product-details-view.ejs', {     // |
+      product: theProduct                                 // |
+    });          // |                                     // |
+  });            // ==========================================
+});
+
+
 module.exports = productRoutes;
