@@ -6,10 +6,25 @@
 
 <p> <%= product.description %> </p>
 
+
+<hr>
+<h3> User Reviews </h3>
+
+<ul>
+  <% product.reviews.forEach((oneReview) => { %>
+    <li>
+      <p> <%= oneReview.content %> </p>
+      <p> ⭐️ <%= oneReview.stars %> out of 5 ⭐️ </p>
+      <strong> <%= oneReview.author %> </strong>
+    </li>
+  <% }) %>
+</ul>
+
 <a href="/products/<%= product._id %>/reviews/new">
   Review This Product
 </a>
 <br>
+<hr>
 
 <a href="/products/<%= product._id %>/edit">
   Edit

@@ -29,10 +29,9 @@ productRoutes.get('/products/new', (req, res, next) => {
 //             ====       ============
 //             |          |
 productRoutes.post('/products/new', (req, res, next) => {
-
-                                  // <input name="productName">
-const theProduct = new Product({  //                  |
-      //               ================================
+                                    // <input name="productName">
+  const theProduct = new Product({  //                  |
+      //               ==================================
       //               |
     name: req.body.productName,
     price: req.body.productPrice,
@@ -42,7 +41,9 @@ const theProduct = new Product({  //                  |
 
   theProduct.save((err) => {
     if (err) {
-      next(err);
+      res.render('products/new-product-view.ejs', {
+        validationErrors: theProduct.errors
+      });
       return;
     }
 

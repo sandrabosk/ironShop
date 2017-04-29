@@ -1,5 +1,13 @@
 <h2> Product Review </h2>
 
+<% if (typeof validationErrors !== 'undefined') { %>
+  <ul>
+    <% for (key in validationErrors) { %>
+      <li> <%= validationErrors[key].message %> </li>
+    <% } %>
+  </ul>
+<% } %>
+
   <!--                      /products/      9999999     /reviews -->
 <form method="post" action="/products/<%= product._id %>/reviews">
   <label   for="content-input"> Content </label>
