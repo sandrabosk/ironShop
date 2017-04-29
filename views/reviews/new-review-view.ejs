@@ -1,0 +1,23 @@
+<h2> Product Review </h2>
+
+  <!--                      /products/      9999999     /reviews -->
+<form method="post" action="/products/<%= product._id %>/reviews">
+  <label   for="content-input"> Content </label>
+  <textarea id="content-input" name="reviewContent"></textarea>
+  <br>
+
+  <label for="stars-input"> Rating (1-5) </label>
+  <input  id="stars-input" type="number" name="reviewStars">
+  <br>
+
+  <label for="author-input"> Your Name </label>
+  <input  id="author-input" type="text" name="reviewAuthor">
+  <br>
+
+  <button> Submit Review </button>
+</form>
+
+
+<h3> <%= product.name %> </h3>
+
+<img src="<%= product.imageUrl %>" width="100%">
