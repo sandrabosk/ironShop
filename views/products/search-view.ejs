@@ -1,0 +1,31 @@
+<h2> Search Products </h2>
+
+<form method="get" action="/search">
+  <label for="search-term-input"> Search By Name </label>
+  <input  id="search-term-input" type="search" name="productSearchTerm">
+  <br>
+
+  <button> Search </button>
+</form>
+
+<a href="/products/expensive"> Most Expensive Items </a>
+<br>
+
+<a href="/products/value"> Best Value Items </a>
+<br>
+
+<% if (typeof products !== 'undefined') { %>
+  <h2> Results </h2>
+
+  <ul>
+    <% products.forEach((oneProduct) => { %>
+      <li>
+        <h3> <%= oneProduct.name %> </h3>
+        <p> Price: $<%= oneProduct.price %> </p>
+        <a href="/products/<%= oneProduct._id %>">
+          View Details
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>

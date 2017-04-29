@@ -163,5 +163,30 @@ productRoutes.post('/products/:id/delete', (req, res, next) => {
   });
 });
 
+productRoutes.get('/search', (req, res, next) => {
+  const searchTerm = req.query.productSearchTerm;
+
+  if (!searchTerm) {
+    res.render('products/search-view.ejs');
+    return;
+  }
+
+  const searchRegex = new RegExp(searchTerm, 'i');
+
+  Product.find(
+    { name: searchRegex },
+    (err, searchResults) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      res.render('products/search-view.ejs', {
+        products: searchResults
+      });
+    }
+  );
+});
+
 
 module.exports = productRoutes;
