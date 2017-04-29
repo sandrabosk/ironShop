@@ -76,6 +76,7 @@ productRoutes.get('/products/:id', (req, res, next) => {
     //                         |
   const productId = req.params.id;
 
+    // db.products.findOne( { _id: productId } )
   Product.findById(productId, (err, theProduct) => {
     if (err) {                        // |
       next(err);                      // =====================                                         // |
@@ -144,6 +145,21 @@ productRoutes.post('/products/:id', (req, res, next) => {
       res.redirect('/products');
     }
   );
+});
+
+productRoutes.post('/products/:id/delete', (req, res, next) => {
+    //                          |
+  const productId = req.params.id;
+
+    // db.products.deleteOne({ _id: productId })
+  Product.findByIdAndRemove(productId, (err, theProduct) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    res.redirect('/products');
+  });
 });
 
 

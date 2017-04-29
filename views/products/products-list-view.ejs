@@ -23,6 +23,10 @@
       <a href="/products/<%= oneProduct._id %>/edit">
         Edit
       </a>
+
+      <form method="post" action="/products/<%= oneProduct._id %>/delete">
+        <button> Delete </button>
+      </form>
     </li>
   <% }) %>
 </ul>
