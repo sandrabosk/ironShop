@@ -75,6 +75,23 @@ productRoutes.get('/products/expensive', (req, res, next) => {
     });
 });
 
+productRoutes.get('/products/value', (req, res, next) => {
+  Product
+    .find()
+    .sort({ price: 1 })   // NORMAL order (a.k.a. "ascending")
+    .limit(10)
+    .exec((err, productList) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      res.render('products/cheap-view.ejs', {
+        products: productList
+      });
+    });
+});
+
 
 // OLD VERSION ===> using query strings
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
