@@ -58,6 +58,24 @@ productRoutes.post('/products/new', (req, res, next) => {
 });
 
 
+productRoutes.get('/products/expensive', (req, res, next) => {
+  Product
+    .find()
+    .sort({ price: -1 })   // REVERSE order (a.k.a. "descending")
+    .limit(10)
+    .exec((err, productList) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      res.render('products/expensive-view.ejs', {
+        products: productList
+      });
+    });
+});
+
+
 // OLD VERSION ===> using query strings
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //                    /product-details?id=1788

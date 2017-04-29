@@ -1,0 +1,13 @@
+<h2> Most Expensive Items </h2>
+
+<ul>
+  <% products.forEach((oneProduct) => { %>
+    <li>
+      <h3> <%= oneProduct.name %> </h3>
+      <p> Price: $<%= oneProduct.price %> </p>
+      <a href="/products/<%= oneProduct._id %>">
+        View Details
+      </a>
+    </li>
+  <% }) %>
+</ul>
